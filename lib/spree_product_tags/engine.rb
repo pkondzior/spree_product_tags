@@ -1,3 +1,4 @@
+require 'acts-as-taggable-on'
 module SpreeProductTags
   class Engine < Rails::Engine
     require 'spree/core'

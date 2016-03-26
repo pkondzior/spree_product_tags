@@ -1,0 +1,12 @@
+<% content_for :page_title do %>
+  <%= Spree.t(:new_tag) %>
+<% end %>
+
+<%= render :partial => 'spree/admin/shared/error_messages', :locals => { :target => @tag } %>
+
+<%= form_for [:admin, @tag] do |f| %>
+  <fieldset>
+    <%= render :partial => 'form', :locals => { :f => f } %>
+    <%= render :partial => 'spree/admin/shared/new_resource_links' %>
+  </fieldset>
+<% end %>

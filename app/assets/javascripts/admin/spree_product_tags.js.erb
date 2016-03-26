@@ -1,0 +1,48 @@
+//= require spree/backend
+
+$(document).ready(function () {
+    'use strict';
+
+    Spree.routes.tag_search = Spree.pathFor('api/tags');
+    Spree.translations.tag_placeholder = "<%= Spree.t(:tag_placeholder) %>";
+
+    function formatTag(tag) {
+        return Select2.util.escapeMarkup(tag.presentation);
+    }
+
+    if ($('#product_tag_list').length > 0) {
+        $('#product_tag_list').select2({
+            placeholder: Spree.translations.tag_placeholder,
+            multiple: true,
+            initSelection: function (element, callback) {
+                var url = Spree.url(Spree.routes.tag_search, {
+                    ids: element.val(),
+                    token: Spree.api_key
+                });
+                return $.getJSON(url, null, function (data) {
+                    return callback(data);
+                });
+            },
+            ajax: {
+                url: Spree.routes.tag_search,
+                quietMillis: 200,
+                datatype: 'json',
+                data: function (term) {
+                    return {
+                        q: {
+                            name_cont: term
+                        },
+                        token: Spree.api_key
+                    };
+                },
+                results: function (data) {
+                    return {
+                        results: data
+                    };
+                }
+            },
+            formatResult: formatTag,
+            formatSelection: formatTag
+        });
+    }
+});

@@ -2,4 +2,10 @@
 # See https://github.com/svenfuchs/rails-i18n/tree/master/rails%2Flocale for starting points.
 
 en:
-  hello: "Hello world"
+  activerecord:
+    models:
+      spree/tag:
+        one: Tag
+        other: Tags
+  spree:
+    tag_placeholder: Choose a list of tags

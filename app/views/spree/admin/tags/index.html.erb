@@ -1,0 +1,44 @@
+<% content_for :page_title do %>
+    <%= plural_resource_name(Spree::Tag) %>
+<% end %>
+
+<% content_for :page_actions do %>
+    <span id="new_ot_link">
+    <%= button_link_to Spree.t(:new_tag), new_object_url, { class: "btn-success", icon: 'add', id: 'new_tag_link' } %>
+  </span>
+<% end %>
+
+<div id="new_tag"></div>
+
+<% if @tags.any? %>
+    <table class="table sortable" id="listing_tags" data-hook data-sortable-link="<%= update_positions_admin_tags_url %>">
+      <thead>
+      <tr data-hook="tag_header">
+        <th class="no-border"></th>
+        <th><%= Spree.t(:name) %></th>
+        <th><%= Spree.t(:presentation) %></th>
+        <th class="actions"></th>
+      </tr>
+      </thead>
+      <tbody>
+      <% @tags.each do |tag| %>
+          <tr class="spree_tag <%= cycle('odd', 'even')%>" id="<%= spree_dom_id tag %>" data-hook="tag_row">
+            <td class="move-handle text-center">
+              <span class="icon icon-move handle"></span>
+            </td>
+            <td><%= tag.name %></td>
+            <td class="presentation"><%= tag.presentation %></td>
+            <td class="actions actions-2 text-right">
+              <%= link_to_edit(tag, class: 'admin_edit_tag', no_text: true) %>
+              <%= link_to_delete(tag, no_text: true) %>
+            </td>
+          </tr>
+      <% end %>
+      </tbody>
+    </table>
+<% else %>
+    <div class="alert alert-info no-objects-found">
+      <%= Spree.t(:no_resource_found, resource: plural_resource_name(Spree::Tag)) %>,
+      <%= link_to Spree.t(:add_one), new_object_url %>!
+    </div>
+<% end %>
