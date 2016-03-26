@@ -1,4 +1,4 @@
-//= require admin/spree_backend
+//= require spree/backend
 
 $(document).ready(function() {
     $("#product_tags").select2({
